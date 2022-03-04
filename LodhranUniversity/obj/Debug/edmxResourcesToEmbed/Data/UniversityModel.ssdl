@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="UniversityModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="UniversityModelStoreContainer">
+    <EntitySet Name="Students" EntityType="UniversityModel.Store.Students" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Courses" EntityType="UniversityModel.Store.Courses" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Enrollments" EntityType="UniversityModel.Store.Enrollments" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="StudentEnrollment" Association="UniversityModel.Store.StudentEnrollment">
+      <End Role="Student" EntitySet="Students" />
+      <End Role="Enrollment" EntitySet="Enrollments" />
+    </AssociationSet>
+    <AssociationSet Name="CourseEnrollment" Association="UniversityModel.Store.CourseEnrollment">
+      <End Role="Course" EntitySet="Courses" />
+      <End Role="Enrollment" EntitySet="Enrollments" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Students">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="LastName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="EnrollmentDate" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Courses">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Title" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="CreditHours" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Enrollments">
+    <Key>
+      <PropertyRef Name="EnrollmentID" />
+    </Key>
+    <Property Name="EnrollmentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StudentID" Type="int" Nullable="false" />
+    <Property Name="CourseID" Type="int" Nullable="false" />
+    <Property Name="Grade" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <Association Name="StudentEnrollment">
+    <End Role="Student" Type="UniversityModel.Store.Students" Multiplicity="1" />
+    <End Role="Enrollment" Type="UniversityModel.Store.Enrollments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Student">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Enrollment">
+        <PropertyRef Name="StudentID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CourseEnrollment">
+    <End Role="Course" Type="UniversityModel.Store.Courses" Multiplicity="1" />
+    <End Role="Enrollment" Type="UniversityModel.Store.Enrollments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Course">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Enrollment">
+        <PropertyRef Name="CourseID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
