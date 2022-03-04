@@ -7,7 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using LodhranUniversity.Data;
-
+using System.Data.SqlClient;
 namespace LodhranUniversity.Controllers
 {
     public class CoursesController : Controller
